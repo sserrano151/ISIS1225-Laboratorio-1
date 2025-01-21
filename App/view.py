@@ -30,33 +30,46 @@ import sys
 import App.logic as logic
 
 """
-La vista se encarga de la interacción con el usuario
-Presenta el menu de opciones  y  por cada seleccion
-se hace la solicitud al controlador para ejecutar la
-operación solicitada
+La vista se encarga de la interacción con el usuario.
+Presenta el menu de opciones y por cada seleccion se hace 
+la solicitud a la lógica para ejecutar la operación solicitada
 """
+
+# Carpeta de datos
 dataFolder = "GoodReads"
 
 
 def new_logic():
     """
-    Se crea una instancia de la aplicacion
+    Función que crea una nueva instancia de la lógica
+
+    :return: Nueva instancia de la lógica
+    :rtype: logic
     """
     app = logic.new_logic()
     return app
 
 
-def printMenu():
+def print_menu():
+    """
+    Imprime el menú de opciones en consola para el usuario
+    """
     print("Opciones:")
     print("1- Cargar Libros")
     print("2- Cargar Tags")
     # TODO: Mods Lab 1, agregar la opcion 3.
+    # Agregue la opción 3 para cargar los tags de los libros.
+    # Pueede guiarse de las opciones 1 y 2.
     print("0- Salir")
 
 
 def load_books(app):
     """
-    Carga los libros
+    Función que carga los libros en la aplicación. 
+    Carga los libros desde el archivo books-small.csv y los almacena en la aplicación
+
+    :param app: Aplicación de la lógica
+    :type app: logic
     """
     books = logic.load_books(app,
                              "GoodReads/books-small.csv")
@@ -65,7 +78,11 @@ def load_books(app):
 
 def load_tags(app):
     """
-    Carga los Tags
+    Función que carga los tags en la aplicación.
+    Carga los tags desde el archivo tags.csv y los almacena en la aplicación
+
+    :param app: Aplicación de la lógica
+    :type app: logic
     """
     tags = logic.load_tags(app,
                            "GoodReads/tags.csv")
@@ -74,7 +91,11 @@ def load_tags(app):
 
 def load_books_tags(app):
     """
-    Cargar los Tags de libros
+    Función que carga los tags de los libros en la aplicación.
+    Carga los tags de los libros desde el archivo book_tags-small.csv y los almacena en la aplicación
+
+    :param app: Aplicación de la lógica
+    :type app: logic
     """
     booksTags = logic.load_books_tags(app,
                                       "GoodReads/book_tags-small.csv")
@@ -89,13 +110,14 @@ app = new_logic()
 
 def main():
     """
-    Menu principal
+    Función principal del programa.
+    Presenta el menu de opciones y ejecuta las operaciones solicitadas por el usuario.
     """
 
     working = True
     # ciclo del menu
     while working:
-        printMenu()
+        print_menu()
         inputs = input("Seleccione una opción para continuar\n")
         if int(inputs[0]) == 1:
             print("Cargando información de libros....")
@@ -108,6 +130,10 @@ def main():
             print("Total de tags cargados: " + str(tags) + "\n")
 
         # TODO: Mods Lab 1, agregar la funcion opt 3 -> load_book_tags().
+        # Agregue la opción 3 que llama a la función load_books_tags() (creada en la lógica).
+        # Esta función carga los tags de los libros en el catalogo.
+        # Puede guiarse de las opciones 1 y 2.
+        # Imprima el total de tags de los libros cargados.
         elif int(inputs[0]) == 3:
             pass
 

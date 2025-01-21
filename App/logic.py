@@ -28,59 +28,93 @@
 
 import os
 
+
+# Importar el modulo de la estructura de datos set
 from DataStructures import set as set
 
+# Directorio de datos de los archivos
 data_dir = os.path.dirname(os.path.realpath('__file__')) + '/Data/'
 
 """
-El controlador se encarga de mediar entre la vista y el modelo.
+La lógica se encarga de procesar los datos y realizar las operaciones
+sobre ellos. En este caso, se encarga de cargar los datos y realizar
+las consultas sobre ellos.
 """
 
 
 def new_logic():
     """
-    Inicializa el catálogo de libros. Crea un conjunto vacia para guardar
-    todos los libros, adicionalmente, crea una lista vacia para los autores,
-    una lista vacia para los generos y una lista vacia para la asociación
-    generos y libros. Retorna el catalogo inicializado.
+    Inicializa los datos y crea un catalogo vacio. 
+
+    Para esta actividad, un catalogo es un diccionario donde se guardan
+    las estructuras de datos que representan los libros, los autores, los
+    generos y la asociación entre libros y generos. 
+
+    Se crea un catalogo con las siguientes atributos:
+    - books: Set para guardar los libros.
+    - tags: Set para guardar los generos.
+    - book_tags: Set para guardar la asociación entre libros y generos.
+
+    :return: Catalogo inicializado
+    :rtype: dict
     """
+
+    # Creación del catalogo vacio
     catalog = {
         "books": None,
         "tags": None,
         "book_tags": None,
     }
 
-    # definicion de arreglos
+    # Inicialización de las estructuras de datos
     catalog["books"] = set.new_set()
     catalog["tags"] = set.new_set()
     catalog["book_tags"] = set.new_set()
+
     return catalog
 
 
 # Funciones para la carga de datos
 
-def load_books(app, filename):
+def load_books(catalog, filename):
     """
-    Carga los libros del archivo. Por cada libro se toman sus autores y por
-    cada uno de ellos, se crea en la lista de autores, a dicho autor y una
+    Función que carga los libros en el catalogo.
+
+    Por cada libro se toman sus autores y por cada uno de ellos, se crea en la lista de autores, a dicho autor y una
     referencia al libro que se esta procesando.
+
+    :param catalog: Catalogo de la aplicación
+    :type catalog: dict
+    :param filename: Nombre del archivo csv con los libros
+    :type filename: str
+
+    :returns: Tamaño del conjunto de libros
+    :rtype: int
     """
-    books = app.get("books")
+    books = catalog["books"]
     booksfile = os.path.join(data_dir, filename)
-    app["books"] = set.load_set(books, booksfile)
-    if empty_books(app):
+    catalog["books"] = set.load_set(books, booksfile)
+    if empty_books(catalog):
         return None
     else:
-        return book_size(app)
+        return book_size(catalog)
 
 
-def load_tags(app, filename):
+def load_tags(catalog, filename):
     """
     Carga todos los tags del archivo y los agrega a la lista de tags
+
+    :param catalog: Catalogo de la aplicación
+    :type catalog: dict
+    :param filename: Nombre del archivo csv con los tags
+    :type filename: str
+
+    :returns: Tamaño del conjunto de tags
+    :rtype: int
     """
-    tags = app.get("tags")
+    tags = catalog["tags"]
     tagsfile = os.path.join(data_dir, filename)
-    app["tags"] = set.load_set(tags, tagsfile)
+    catalog["tags"] = set.load_set(tags, tagsfile)
 
     if set.is_empty(tags):
         return None
@@ -88,39 +122,105 @@ def load_tags(app, filename):
         return set.size(tags)
 
 
-def load_books_tags(control, filename):
+def load_books_tags(catalog, filename):
     """
     Carga los tags de los libros del archivo y los agrega a la lista
     de tags. Siga el mismo procedimiento que en la carga de libros.
+
+    :param catalog: Catalogo de la aplicación
+    :type catalog: dict
+    :param filename: Nombre del archivo csv con los tags de los libros
+    :type filename: str
+
+    :returns: Tamaño del conjunto de tags de los libros
+    :rtype: int
     """
     # TODO: Mods Lab 1, integrar vista y logica
+    # Implemente una función que cargue los tags de los libros en el catalogo.
+    # La función debe recibir el catalogo y el nombre del archivo csv con los tags de los libros.
+    # La función debe cargar los tags de los libros del archivo y los agregar al conjunto book_tags del catalogo.
+    # La función debe retornar el tamaño del conjunto de tags de los libros.
     pass
 
 # Funciones de consulta
 
 
 def book_size(catalog):
+    """
+    Obtiene el tamaño del conjunto de libros.
+
+    :param catalog: Catalogo de la aplicación
+    :type catalog: dict
+
+    :returns: Tamaño del conjunto de libros
+    :rtype: int
+    """
     return set.size(catalog["books"])
 
 
 def tag_size(catalog):
+    """
+    Obtiene el tamaño del conjunto de tags.
+
+    :param catalog: Catalogo de la aplicación
+    :type catalog: dict
+
+    :returns: Tamaño del conjunto de tags
+    :rtype: int
+    """
     return set.size(catalog["tags"])
 
 
 def book_tag_size(catalog):
+    """
+    Obtiene el tamaño del conjunto de tags de los libros.
+
+    :param catalog: Catalogo de la aplicación
+    :type catalog: dict
+
+    :returns: Tamaño del conjunto de tags de los libros
+    :rtype: int
+    """
     return set.size(catalog["book_tags"])
 
 
 def empty_books(catalog):
-    books = catalog.get("books")
+    """
+    Verifica si el conjunto de libros esta vacio.
+
+    :param catalog: Catalogo de la aplicación
+    :type catalog: dict
+
+    :returns: True si el conjunto de libros esta vacio, False de lo contrario
+    :rtype: bool
+    """
+    books = catalog["books"]
     return set.is_empty(books)
 
 
 def empty_tags(catalog):
-    tags = catalog.get("tags")
+    """
+    Verifica si el conjunto de tags esta vacio.
+
+    :param catalog: Catalogo de la aplicación
+    :type catalog: dict
+
+    :returns: True si el conjunto de tags esta vacio, False de lo contrario
+    :rtype: bool
+    """
+    tags = catalog["tags"]
     return set.is_empty(tags)
 
 
 def empty_book_tags(catalog):
-    book_tags = catalog.get("book_tags")
+    """
+    Verifica si el conjunto de tags de los libros esta vacio.
+
+    :param catalog: Catalogo de la aplicación
+    :type catalog: dict
+
+    :returns: True si el conjunto de tags de los libros esta vacio, False de lo contrario
+    :rtype: bool
+    """
+    book_tags = catalog["book_tags"]
     return set.is_empty(book_tags)
