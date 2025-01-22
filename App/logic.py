@@ -95,7 +95,7 @@ def load_books(catalog, filename):
     booksfile = os.path.join(data_dir, filename)
     catalog["books"] = set.load_set(books, booksfile)
     if empty_books(catalog):
-        return None
+        return 0
     else:
         return book_size(catalog)
 
@@ -117,7 +117,7 @@ def load_tags(catalog, filename):
     catalog["tags"] = set.load_set(tags, tagsfile)
 
     if set.is_empty(tags):
-        return None
+        return 0
     else:
         return set.size(tags)
 

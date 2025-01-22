@@ -3,16 +3,14 @@ import csv
 
 def new_set():
     """
-    Añade un elemento no existente al conjunto.
+    Crea un conjunto (set) vacio el cuál permite almacenar elementos únicos sin un orden específico.
 
-    Si el elemento ya existe en el conjunto, no se añadirá. De lo contrario, se añadirá al conjunto (se inserta al array) y se incrementará el tamaño del conjunto.
+    El conjunto (set) es creado con los siguientes atributos inicializados:
 
-    :param my_set: Conjunto al que se le añadirá un elemento.
-    :type my_set: :ref:`set<set.py>`
-    :param element: Elemento que se añadirá al conjunto.
-    :type element: any
+    - **size:** Tamaño del conjunto, inicializado en 0.
+    - **elements:** Lista de elementos del conjunto. Inicializada como ``array`` vacio.
 
-    :returns: Conjunto con el elemento añadido.
+    :returns: Conjuto vacío creado recien inicializado
     :rtype: :ref:`set<set.py>`
     """
     my_new_set = {
@@ -73,11 +71,11 @@ def load_set(my_set, filename):
     :returns: Set con los elementos cargados
     :rtype: set
     """
-    if (filename is not None):
+    if (my_set is not None and filename is not None):
         input_file = csv.DictReader(open(filename, encoding="utf-8"),
                                     delimiter=",")
-    for line in input_file:
-        add_element(my_set, line)
+        for line in input_file:
+            add_element(my_set, line)
     return (my_set)
 
 
